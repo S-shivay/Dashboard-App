@@ -1,0 +1,45 @@
+<div class="dashboard-container">
+    <button class="add-widget-btn" (click)="toggleSliderMenu()">+ Add Widget</button>
+  
+    <!-- Background Overlay -->
+    <div class="overlay" [class.active]="showSliderMenu"></div>
+  
+    <!-- Slider Menu -->
+    <div [class.active]="showSliderMenu" class="slider-menu">
+      <div class="menu-header">
+        <span class="close" (click)="toggleSliderMenu()">&times;</span>
+        <h2>Select Dashboard</h2>
+      </div>
+  
+      <!-- Dashboard Selection in a Row -->
+      <div class="dashboard-selection-row">
+        <button *ngFor="let category of categories" (click)="selectDashboard(category)">
+          {{ category.name }}
+        </button>
+      </div>
+  
+      <!-- Form displayed after dashboard selection -->
+      <div *ngIf="selectedCategory" class="add-widget-form">
+        <h3>Add Widget to {{ selectedCategory.name }}</h3>
+        <input [(ngModel)]="newWidgetName" placeholder="Widget Name" />
+        <input [(ngModel)]="newWidgetContent" placeholder="Widget Content" />
+        <button (click)="addWidget()">Add Widget</button>
+      </div>
+    </div>
+  
+    <!-- Existing Dashboard Display -->
+    <div *ngFor="let category of categories" class="category-container">
+      <h2>{{ category.name }}</h2>
+  
+      <div class="widgets-container">
+        <div *ngFor="let widget of category.widgets" class="widget">
+          <div class="widget-header">
+            <h3>{{ widget.name }}</h3>
+            <span class="remove-widget" (click)="removeWidget(category, widget)">&times;</span>
+          </div>
+          <p>{{ widget.content }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
